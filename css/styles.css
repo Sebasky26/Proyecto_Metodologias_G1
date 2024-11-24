@@ -1,0 +1,363 @@
+html {
+    font-size: 70.5%;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-size: 16px;
+    font-family: 'Krub', sans-serif;
+}
+
+h1 {
+    font-size: 3.8rem;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2.8rem;
+}
+
+h3 {
+    font-size: 2.4rem;
+}
+
+/* Styles for the game elements */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* Estilos de los botones */
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 10px 0;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 2rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* Efecto hover */
+.menu li:hover {
+    background-color: #f0f0f0;
+    color: #007BFF;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+/* Estilo del input de texto */
+#textInput {
+    margin-top: 15px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 200px;
+}
+
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+canvas {
+    border: 2px solid #000;
+}
+
+.instruction {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.instruction.active {
+    color: #FF0000;
+}
+
+
+.registro-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.registro-container h2 {
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 1.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-group .btn {
+    font-size: 1.4rem;
+    padding: 10px;
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-group .btn:hover {
+    background-color: #5a6268;
+}
+
+.index-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    padding: 10px;
+    max-width: 900px; /* Ancho máximo del contenedor principal */
+    margin: auto; /* Centra el contenido */
+}
+
+.info-juego {
+    grid-column: span 2;
+    background-color: #4A90E2;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.6rem;
+    color: #FFFFFF;
+    border-radius: 8px;
+}
+
+.material-audiovisual {
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.audiovisual-img {
+    width: 300px; /* Ajusta el ancho de la imagen al contenedor */
+    max-width: 300px; /* Ancho máximo de la imagen para evitar que sea demasiado grande */
+    height: auto; /* Mantiene la proporción de la imagen */
+    border-radius: 8px;
+}
+
+.menu-opciones {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-opciones label {
+    font-size: 1.4rem;
+    color: #333;
+}
+
+.menu-opciones select, .menu-opciones button {
+    font-size: 1.4rem;
+    padding: 8px 12px;
+    background-color: #34495E;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Alinea los botones y el selector a lo ancho del contenedor */
+}
+
+.menu-opciones select:hover, .menu-opciones button:hover {
+    background-color: #2C3E50;
+}
+
+.estadistica-container {
+    padding: 20px;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.estadistica-container h1 {
+    grid-column: span 2;
+    text-align: center;
+    font-size: 3.6rem;
+    color: #4A90E2;
+    margin-bottom: 20px;
+}
+
+.info-paciente {
+    background-color: #E0E7ED;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.info-paciente label {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+#paciente-id {
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.datos-paciente {
+    background-color: #C8D6E5;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #333;
+    width: 100%;
+}
+
+.estadisticas-detalle {
+    background-color: #EAF0F7;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.estadisticas-detalle p {
+    font-size: 1.4rem;
+    color: #34495E;
+    margin: 5px 0;
+}
+
+.grafico-container {
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    height: 300px;
+}
+
+#grafico {
+    width: 100%;
+    height: 100%;
+}
+
+.instruction {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.instruction.completed {
+    color: #888; /* Color para indicar que la instrucción ha sido completada */
+    text-decoration: line-through;
+}
+
+.instruction.active {
+    color: #FF0000; /* Destaca la instrucción activa en rojo */
+}
+
+.notification {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    padding: 20px 30px;
+    background-color: rgba(255, 0, 0, 0.9);
+    color: white;
+    font-size: 24px; /* Aumenta el tamaño de la fuente */
+    font-weight: bold; /* Añade negrita para mayor visibilidad */
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+#attemptCounter {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 1.5rem;
+    color: red;
+    font-weight: bold;
+}
+
+#timeCounter {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    color: green;
+    font-weight: bold;
+}
+
+.boton-salir {
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.boton-salir:hover {
+    background-color: #c9302c;
+}

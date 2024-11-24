@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego - Comprensión</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <h1>BIENVENIDO AL JUEGO COMPRENSIÓN</h1>
+    <div class="index-container">
+        <!-- Información del Juego -->
+        <div class="info-juego">
+            <p>
+                Comprension es un juego de memoria y lógica diseñado especialmente para apoyar a pacientes con
+                alzhéimer.
+                A través de ejercicios visuales y tareas simples de colorear, el juego ayuda a estimular la atención, la
+                concentración y la memoria.
+                Cada actividad está cuidadosamente pensada para ofrecer una experiencia agradable, con instrucciones
+                claras y retos que favorecen el desarrollo cognitivo.
+                ¡Diviértete mientras ejercitas tu mente!
+            </p>
+        </div>
+
+        <!-- Material Audiovisual -->
+        <div class="material-audiovisual">
+            <img src="img/cerebro.jpg" alt="Imagen de cerebro" class="audiovisual-img">
+        </div>
+
+        <!-- Menú de opciones -->
+        <div class="menu-opciones">
+            <select id="select-paciente">
+                <option value="" disabled selected>Seleccionar Paciente</option>
+                <!-- Pacientes de la base de datos serán cargados aquí -->
+            </select>
+            <button onclick="window.location.href='registro.html'">Agregar paciente</button>
+            <button onclick="window.location.href='tablero.html'">Jugar</button>
+        </div>
+    </div>
+
+    <script src="scripts/script.js"></script>
+</body>
+
+</html>
