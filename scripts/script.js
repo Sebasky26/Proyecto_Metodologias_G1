@@ -1,19 +1,6 @@
-// Evento de cambio en el menú desplegable para redirigir al tablero
-document.addEventListener("DOMContentLoaded", function () {
-    cargarPacientes(); // Cargar pacientes al cargar la página
-    drawBoard(); // Dibujar el tablero al cargar la página
-    startTimer(); // Iniciar el temporizador al cargar la página
+/* ========== Seccion del Tablero ==========*/
 
-    // Agregar evento de cambio al selector de pacientes
-    const selectPaciente = document.getElementById("select-paciente");
-    selectPaciente.addEventListener("change", function () {
-        const pacienteId = this.value;
-        if (pacienteId) {
-            localStorage.setItem("pacienteId", pacienteId); // Guarda el ID del paciente en localStorage
-        }
-    });
-});
-
+// Variables y constantes para el tablero
 const canvas = document.getElementById("tablero");
 const ctx = canvas.getContext("2d");
 const cellSize = 50;
@@ -26,16 +13,6 @@ let textInputMode = false;
 let incorrectAttempts = 0;
 let completedInstructions = 0
 let startTime;
-// Variables para el temporizador
-let elapsedTime = 0;
-let timerInterval;
-
-let paintedCells = {
-    left: false,
-    right: false,
-    above: false,
-    below: false
-};
 
 // Posiciones estáticas de los elementos en el tablero
 const starPosition = { row: 1, col: 6 };
@@ -47,56 +24,14 @@ const numberPositions = {
     48: { row: 4, col: 5 }
 };
 
-// Lista de instrucciones
-const instructions = [
-    { text: "Colorea de rojo la casilla que está encima de la estrella.", fulfilled: false, color: "#FF0000", check: checkAboveStar },
-    { text: "Colorea de café la casilla que está a la derecha de la que tiene el número 15.", fulfilled: false, color: "#8B4513", check: checkRightOfNumber(15) },
-    { text: "Escribe la primera letra de tu nombre encima de la casilla negra.", fulfilled: false, textInput: true, check: checkAboveBlack },
-    { text: "Colorea de verde la casilla derecha al lado del número 50.", fulfilled: false, color: "#008000", check: checkSidesOfNumber(50) },
-    { text: "Colorea de rosado la casilla de la primera fila y cuarta columna.", fulfilled: false, color: "#FFC0CB", check: checkFirstRowFourthCol },
-    { text: "Colorea de amarillo la casilla encima de la que tiene el número 21.", fulfilled: false, color: "#FFFF00", check: checkAboveAndBelowOfNumber(21) },
-    { text: "Colorea de morado la casilla que está debajo de la negra.", fulfilled: false, color: "#800080", check: checkBelowBlack },
-    { text: "Escribe el número de hijos que tienes en la cuarta fila y octava columna.", fulfilled: false, textInput: true, check: checkFourthRowEighthCol },
-    { text: "Colorea de celeste la casilla encima de la que tiene el número igual a la multiplicación 16 x 3.", fulfilled: false, color: "#ADD8E6", check: checkAboveMultiplication },
-    { text: "Dibuja un triángulo en la casilla que está al lado izquierdo de 48.", fulfilled: false, check: checkLeftOfNumber(48) },
-    { text: "Escribe la séptima letra del abecedario en la segunda fila y segunda columna.", fulfilled: false, textInput: true, check: checkSecondRowSecondCol }
-];
+let paintedCells = {
+    left: false,
+    right: false,
+    above: false,
+    below: false
+};
 
-document.addEventListener("DOMContentLoaded", function () {
-    let secondsElapsed = 0;
-    let domContentLoadedTime = 0;
-    const timeCounter = document.getElementById('timeCounter');
-
-    if (timeCounter) {
-        // Inicia el temporizador
-        const timerInterval = setInterval(() => {
-            secondsElapsed++;
-            const minutes = Math.floor(secondsElapsed / 60);
-            const seconds = secondsElapsed % 60;
-            timeCounter.textContent = `Tiempo transcurrido: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        }, 1000);
-
-        // Registra el tiempo transcurrido cuando el DOM se carga completamente
-        domContentLoadedTime = secondsElapsed;
-
-        // Función para detener el temporizador y mostrar el tiempo de carga del DOM y los intentos incorrectos
-        window.showCompletionTime = function () {
-            clearInterval(timerInterval);
-            const totalMinutes = Math.floor(secondsElapsed / 60);
-            const totalSeconds = secondsElapsed % 60;
-            const domLoadedMinutes = Math.floor(domContentLoadedTime / 60);
-            const domLoadedSeconds = domContentLoadedTime % 60;
-
-            // Muestra la alerta con los intentos incorrectos
-            alert(`¡Felicidades! Completaste el test en ${totalMinutes}:${totalSeconds < 10 ? '0' : ''}${totalSeconds}.\n` +
-                `Intentos incorrectos: ${incorrectAttempts}`);
-        };
-
-    } else {
-        console.error("Elemento 'timeCounter' no encontrado");
-    }
-});
-
+// Funcion para dibujar el tablero y sus elementos
 function drawBoard() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -120,17 +55,6 @@ function drawBoard() {
     }
 }
 
-// Muestra todas las instrucciones en pantalla solo una vez
-function displayInstructions() {
-    const instructionContainer = document.getElementById("instruction");
-    instructions.forEach((instruction, index) => {
-        const instructionElement = document.createElement("p");
-        instructionElement.id = `instruction-${index}`;
-        instructionElement.innerText = instruction.text;
-        instructionContainer.appendChild(instructionElement);
-    });
-}
-
 // Funciones para dibujar los elementos en el tablero
 function drawElement(row, col, element) {
     const x = col * cellSize;
@@ -149,6 +73,7 @@ function drawElement(row, col, element) {
     }
 }
 
+// Función para dibujar una estrella
 function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
     let rot = Math.PI / 2 * 3;
     let x = cx;
@@ -173,19 +98,23 @@ function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
     ctx.fill();
 }
 
-// Función para seleccionar color y modo de interacción
+// Funciones para seleccionar color y modo de interacción
+
+// Función para seleccionar un color
 function setColor(color) {
     selectedColor = color;
     drawTriangleMode = false;
     textInputMode = false;
 }
 
+// Función para activar el modo de dibujar triángulos
 function drawTriangle() {
     drawTriangleMode = true;
     selectedColor = "";
     textInputMode = false;
 }
 
+// Función para activar el modo de escribir texto
 function enableTextInput() {
     textInputMode = true;
     selectedColor = "";
@@ -230,6 +159,7 @@ function colorCell(row, col, color) {
     }
 }
 
+// Función para dibujar un triángulo en una celda
 function drawTriangleInCell(row, col) {
     const x = col * cellSize;
     const y = row * cellSize;
@@ -243,6 +173,7 @@ function drawTriangleInCell(row, col) {
     ctx.fill();
 }
 
+// Función para escribir texto en una celda
 function writeOnCell(row, col, text) {
     const x = col * cellSize + cellSize / 3;
     const y = row * cellSize + cellSize / 1.5;
@@ -251,34 +182,36 @@ function writeOnCell(row, col, text) {
     ctx.fillText(text, x, y);
 }
 
-// Función para cargar pacientes
-function cargarPacientes() {
-    fetch('obtener_pacientes.php')
-        .then(response => response.json())
-        .then(data => {
-            const selectPaciente = document.getElementById("select-paciente");
-            data.forEach(paciente => {
-                const option = document.createElement("option");
-                option.value = paciente.id;
-                option.textContent = paciente.nombre;
-                selectPaciente.appendChild(option);
-            });
-        })
-        .catch(error => console.error("Error al cargar pacientes:", error));
+
+/* ========== Sección de Instrucciones ==========*/
+
+// Lista de instrucciones
+const instructions = [
+    { text: "Colorea de rojo la casilla que está encima de la estrella.", fulfilled: false, color: "#FF0000", check: checkAboveStar },
+    { text: "Colorea de café la casilla que está a la derecha de la que tiene el número 15.", fulfilled: false, color: "#8B4513", check: checkRightOfNumber(15) },
+    { text: "Escribe la primera letra de tu nombre encima de la casilla negra.", fulfilled: false, textInput: true, check: checkAboveBlack },
+    { text: "Colorea de verde la casilla derecha al lado del número 50.", fulfilled: false, color: "#008000", check: checkSidesOfNumber(50) },
+    { text: "Colorea de rosado la casilla de la primera fila y cuarta columna.", fulfilled: false, color: "#FFC0CB", check: checkFirstRowFourthCol },
+    { text: "Colorea de amarillo la casilla encima de la que tiene el número 21.", fulfilled: false, color: "#FFFF00", check: checkAboveAndBelowOfNumber(21) },
+    { text: "Colorea de morado la casilla que está debajo de la negra.", fulfilled: false, color: "#800080", check: checkBelowBlack },
+    { text: "Escribe el número de hijos que tienes en la cuarta fila y octava columna.", fulfilled: false, textInput: true, check: checkFourthRowEighthCol },
+    { text: "Colorea de celeste la casilla encima de la que tiene el número igual a la multiplicación 16 x 3.", fulfilled: false, color: "#ADD8E6", check: checkAboveMultiplication },
+    { text: "Dibuja un triángulo en la casilla que está al lado izquierdo de 48.", fulfilled: false, check: checkLeftOfNumber(48) },
+    { text: "Escribe la séptima letra del abecedario en la segunda fila y segunda columna.", fulfilled: false, textInput: true, check: checkSecondRowSecondCol }
+];
+
+// Muestra todas las instrucciones en pantalla solo una vez
+function displayInstructions() {
+    const instructionContainer = document.getElementById("instruction");
+    instructions.forEach((instruction, index) => {
+        const instructionElement = document.createElement("p");
+        instructionElement.id = `instruction-${index}`;
+        instructionElement.innerText = instruction.text;
+        instructionContainer.appendChild(instructionElement);
+    });
 }
 
-function showNotification(message) {
-    const notificationElement = document.createElement("div");
-    notificationElement.innerText = message;
-    notificationElement.className = "notification"; // Asegúrate de tener un estilo CSS para esta clase
-    document.body.appendChild(notificationElement);
-
-    // Ocultar notificación después de 3 segundos
-    setTimeout(() => {
-        notificationElement.remove();
-    }, 5000);
-}
-
+// Función para verificar si se cumplen las condiciones de una instrucción
 function checkConditions(row, col, action) {
     const currentInstruction = instructions[completedInstructions];
 
@@ -310,62 +243,42 @@ function incrementIncorrectAttempts(amount = 1) {
     localStorage.setItem("intentos", incorrectAttempts); // Guardar en localStorage para estadísticas
 }
 
-// Funciones de revisión de condiciones para cada instrucción
-function checkAboveStar(row, col, color) {
-    return color === "#FF0000" && row === starPosition.row - 1 && col === starPosition.col;
+// Función para mostrar notificaciones
+function showNotification(message) {
+    const notificationElement = document.createElement("div");
+    notificationElement.innerText = message;
+    notificationElement.className = "notification"; 
+    document.body.appendChild(notificationElement);
+
+    // Ocultar notificación después de 3 segundos
+    setTimeout(() => {
+        notificationElement.remove();
+    }, 5000);
 }
 
-function checkRightOfNumber(number) {
-    return function (row, col, color) {
-        const pos = numberPositions[number];
-        return color === "#8B4513" && row === pos.row && col === pos.col + 1;
-    };
+/* ========== Sección de Pacientes ==========*/
+
+// Función para cargar pacientes
+function cargarPacientes() {
+    fetch('obtener_pacientes.php')
+        .then(response => response.json())
+        .then(data => {
+            const selectPaciente = document.getElementById("select-paciente");
+            data.forEach(paciente => {
+                const option = document.createElement("option");
+                option.value = paciente.id;
+                option.textContent = paciente.nombre;
+                selectPaciente.appendChild(option);
+            });
+        })
+        .catch(error => console.error("Error al cargar pacientes:", error));
 }
 
-function checkAboveBlack(row, col, text) {
-    return text && row === blackPosition.row - 1 && col === blackPosition.col;
-}
 
-function checkSidesOfNumber(number) {
-    return function (row, col, color) {
-        const pos = numberPositions[number];
-        return color === "#008000" && row === pos.row && (col === pos.col + 1);
-    };
-}
 
-function checkFirstRowFourthCol(row, col, color) {
-    return color === "#FFC0CB" && row === 0 && col === 3;
-}
-
-function checkAboveAndBelowOfNumber(number) {
-    return function (row, col, color) {
-        const pos = numberPositions[number];
-        return (color === "#FFFF00" && row === pos.row - 1 && col === pos.col);
-    };
-}
-
-function checkBelowBlack(row, col, color) {
-    return color === "#800080" && row === blackPosition.row + 1 && col === blackPosition.col;
-}
-
-function checkFourthRowEighthCol(row, col, text) {
-    return text && row === 3 && col === 7;
-}
-
-function checkAboveMultiplication(row, col, color) {
-    return color === "#ADD8E6" && row === numberPositions[48].row - 1 && col === numberPositions[48].col;
-}
-
-function checkLeftOfNumber(number) {
-    return function (row, col, value) {
-        const pos = numberPositions[number];
-        return value === "triangle" && row === pos.row && col === pos.col - 1;
-    };
-}
-
-function checkSecondRowSecondCol(row, col, text) {
-    return (text === "G" || text === "g") && row === 1 && col === 1;
-}
+// Variables para el temporizador
+let elapsedTime = 0;
+let timerInterval;
 
 // Temporizador
 function startTimer() {
@@ -380,4 +293,72 @@ function updateTimer() {
     const seconds = elapsedTime % 60;
     document.getElementById("timer").textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
     requestAnimationFrame(updateTimer);
+}
+
+/* ========== Sección para inicializar el tablero ==========*/
+
+// Evento para cargar el tablero
+document.addEventListener("DOMContentLoaded", function () {
+    initializeTimer(); // Configura e inicia el temporizador
+    initializePacientes(); // Configura el selector de pacientes
+    initializeBoard(); // Configura y dibuja el tablero
+});
+
+// Función para inicializar el tiempo
+function initializeTimer() {
+    let secondsElapsed = 0;
+    const timeCounter = document.getElementById('timeCounter');
+
+    if (!timeCounter) {
+        console.error("Elemento 'timeCounter' no encontrado");
+        return;
+    }
+
+    const timerInterval = setInterval(() => {
+        secondsElapsed++;
+        const minutes = Math.floor(secondsElapsed / 60);
+        const seconds = secondsElapsed % 60;
+        timeCounter.textContent = `Tiempo transcurrido: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }, 1000);
+
+    window.showCompletionTime = function () {
+        clearInterval(timerInterval);
+        const totalMinutes = Math.floor(secondsElapsed / 60);
+        const totalSeconds = secondsElapsed % 60;
+
+        alert(`¡Felicidades! Completaste el test en ${totalMinutes}:${totalSeconds < 10 ? '0' : ''}${totalSeconds}.\n` +
+            `Intentos incorrectos: ${incorrectAttempts}`);
+    };
+}
+
+// Función para inicializar los pacientes
+function initializePacientes() {
+    const selectPaciente = document.getElementById("select-paciente");
+
+    if (!selectPaciente) {
+        console.error("Elemento 'select-paciente' no encontrado");
+        return;
+    }
+
+    cargarPacientes(); // Llama a la función que carga los pacientes dinámicamente
+
+    selectPaciente.addEventListener("change", function () {
+        const pacienteId = this.value;
+        if (pacienteId) {
+            localStorage.setItem("pacienteId", pacienteId); // Guarda el ID del paciente en localStorage
+        }
+    });
+}
+
+// Función para inicializar el tablero
+function initializeBoard() {
+    const canvas = document.getElementById("tablero");
+
+    if (!canvas) {
+        console.error("Canvas 'tablero' no encontrado");
+        return;
+    }
+
+    drawBoard(); // Dibuja el tablero
+    startTimer(); // Inicia el temporizador del tablero (si es diferente del general)
 }
