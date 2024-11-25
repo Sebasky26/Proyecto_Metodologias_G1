@@ -10,11 +10,9 @@
     <div id="attemptCounter" style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; color: red; font-weight: bold;">
         Intentos incorrectos: 0
     </div>
-
-    <div id="timeCounter" style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; color: green; font-weight: bold;">
+    <div id="timer" style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; color: green; font-weight: bold;">
         Tiempo transcurrido: 0:00
     </div>
-
     <h1>Juego - Comprensión</h1>
     <div class="container">
         <div class="menu">
@@ -39,20 +37,17 @@
             <p id="notification" style="font-size: 1.5rem; color: green; font-weight: bold;"></p>
         </div>
     </div>
-
     <!-- Botón de Finalizar Test -->
     <div style="text-align: center; margin-top: 20px;">
         <button onclick="showCompletionTime()" style="font-size: 1.5rem; padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
             Finalizar Test
         </button>
     </div>
-
-    <script src="scripts/script.js"></script>
+    <script src="scripts/tablero.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             drawBoard();
         });
-
         function enableTextInput() {
             textInputMode = true;
             selectedColor = "";

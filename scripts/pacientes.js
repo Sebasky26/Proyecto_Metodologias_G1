@@ -1,3 +1,16 @@
+document.addEventListener("DOMContentLoaded", function () {
+    cargarPacientes(); // Cargar pacientes al cargar la página
+
+    // Agregar evento de cambio al selector de pacientes
+    const selectPaciente = document.getElementById("select-paciente");
+    selectPaciente.addEventListener("change", function () {
+        const pacienteId = this.value;
+        if (pacienteId) {
+            localStorage.setItem("pacienteId", pacienteId); // Guarda el ID del paciente en localStorage
+        }
+    });
+});
+
 // Función para cargar pacientes
 function cargarPacientes() {
     fetch('obtener_pacientes.php')
